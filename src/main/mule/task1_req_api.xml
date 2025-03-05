@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7b323b9a-507c-4647-a740-0a93c623e2d6" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="516080b1-66c8-4ac3-a81b-915ef25e2194">
+		<http:request-connection host="fakestoreapi.com" port="443"/>
+	</http:request-config>
+	<flow name="flow_1" doc:id="a68f1752-478f-4edb-82ed-e022536d8270" >
+		<http:listener doc:name="Listener" doc:id="94117ea3-3d50-44eb-a327-429e64de1bb4" config-ref="HTTP_Listener_config" path="/req"/>
+		<logger level="INFO" doc:name="Logger" message="My Logger" category="com.demo.task1_req_api.flow_1#1"/>
+		<http:request method="GET" doc:name="Request" doc:id="e9893ab4-30d5-4f2f-b2c7-bf1f5d0def98" config-ref="HTTP_Request_configuration" url="https://fakestoreapi.com/products"/>
+		<ee:transform doc:name="Transform Message" doc:id="09e73b3f-927e-4cdd-a920-2db07182b488" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
