@@ -25,9 +25,16 @@
 			</plugin>
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
+            	<artifactId>exchange-mule-maven-plugin</artifactId>
+            	<version>0.0.23</version>
 				<extensions>true</extensions>
+				<executions>
+                	<execution>
+                    	<goals>
+                        	<goal>exchange-pre-deploy</goal>
+                    	</goals>
+                	</execution>
+            	</executions>
 				<configuration>
         			<classifier>mule-application</classifier>
         			<cloudhub2Deployment>
